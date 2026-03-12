@@ -2,111 +2,67 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>SkyCurrency | Finans Kontrol Merkezi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyCurrency | Executive Terminal v3.5</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        :root { --neon-blue: #00d2ff; --neon-green: #39ff14; --neon-gold: #ffcc00; --bg-dark: #080808; }
-        body { background-color: var(--bg-dark); color: #e0e0e0; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; }
-        
-        .top-bar { background: #111; border-bottom: 2px solid #222; padding: 10px; font-weight: 600; font-size: 0.85rem; }
-        .main-header { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); text-shadow: 0 0 20px rgba(0,210,255,0.4); margin: 40px 0; }
+        :root { 
+            --neon-blue: #00d2ff; 
+            --neon-green: #39ff14; 
+            --neon-gold: #ffcc00; 
+            --bg-dark: #050505; 
+            --card-bg: #0f0f0f;
+        }
 
-        .data-card { 
-            background: linear-gradient(145deg, #121212, #0a0a0a);
-            border: 1px solid #252525;
-            border-radius: 12px;
+        body { 
+            background-color: var(--bg-dark); 
+            color: #e0e0e0; 
+            font-family: 'Rajdhani', sans-serif; 
+            letter-spacing: 0.8px;
+            min-height: 100vh;
+        }
+
+        /* Üst Bilgi Barı */
+        .top-bar { 
+            background: #111; 
+            border-bottom: 2px solid #222; 
+            padding: 12px 0; 
+            font-weight: 600; 
+            font-size: 0.85rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Ana Başlık */
+        .main-header { 
+            font-family: 'Orbitron', sans-serif; 
+            color: var(--neon-blue); 
+            text-shadow: 0 0 15px rgba(0,210,255,0.4); 
+            margin: 40px 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        .sub-header {
+            color: #555;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+        }
+
+        /* Siber Kart Yapısı */
+        .cyber-card { 
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 4px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
-        
-        .section-title { border-left: 5px solid var(--neon-blue); padding-left: 15px; margin-bottom: 30px; }
-        .section-title.gold { border-left-color: var(--neon-gold); }
-        .section-title h4 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin: 0; }
 
-        .entry-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 15px 0; 
-            border-bottom: 1px solid #1a1a1a;
-            transition: 0.2s;
+        .cyber-card:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 25px rgba(0,210,255,0.1);
         }
-        .entry-row:hover { background: rgba(255,255,255,0.02); }
-        
-        .label-group { display: flex; flex-direction: column; }
-        .symbol { font-weight: 700; font-size: 1.2rem; color: #fff; }
-        .desc { font-size: 0.75rem; color: #666; text-transform: uppercase; }
-        
-        .value { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.3rem; }
-        .val-cur { color: var(--neon-green); }
-        .val-gold { color: var(--neon-gold); }
-
-        #clock { color: var(--neon-blue); font-family: 'Orbitron', sans-serif; }
-    </style>
-</head>
-<body>
-
-    <div class="top-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <span><i class="fas fa-microchip me-2"></i> SİSTEM ÇEVRİMİÇİ</span>
-            <span><i class="fas fa-temperature-low me-2"></i> {{ weather.temp }}°C - {{ weather.desc | upper }}</span>
-            <span id="clock">00:00:00</span>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="text-center">
-            <h1 class="main-header">FİNANSAL KOMUTA MERKEZİ</h1>
-        </div>
-
-        <div class="row g-4 mb-5">
-            <div class="col-lg-6">
-                <div class="data-card">
-                    <div class="section-title">
-                        <h4>DÖVİZ KURLARI</h4>
-                        <small class="text-muted">CANLI TÜRK LİRASI KARŞILIĞI</small>
-                    </div>
-                    {% for c in currencies %}
-                    <div class="entry-row">
-                        <div class="label-group">
-                            <span class="symbol">{{ c.code }}</span>
-                            <span class="desc">{{ c.name }}</span>
-                        </div>
-                        <div class="value val-cur">{{ c.val }} ₺</div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="data-card">
-                    <div class="section-title gold">
-                        <h4>ALTIN PİYASASI</h4>
-                        <small class="text-muted">HAREM ALTIN ANLIK VERİLERİ</small>
-                    </div>
-                    {% for g in gold %}
-                    <div class="entry-row">
-                        <div class="label-group">
-                            <span class="symbol">{{ g.name }}</span>
-                            <span class="desc">PİYASA SATIŞ FİYATI</span>
-                        </div>
-                        <div class="value val-gold">{{ g.val }} ₺</div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function updateClock() {
-            document.getElementById('clock').textContent = new Date().toLocaleTimeString('tr-TR');
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-        setTimeout(() => location.reload(), 300000);
-    </script>
-</body>
-</html>
