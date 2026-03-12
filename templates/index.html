@@ -3,46 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyCurrency Terminal</title>
+    <title>SkyCurrency | Executive Terminal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { background-color: #050505; color: #e0e0e0; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 0; }
-        .top-bar { background: #111; border-bottom: 2px solid #222; padding: 10px; font-size: 0.9rem; text-align: center; color: #00d2ff; }
-        .header-title { font-family: 'Orbitron', sans-serif; color: #00d2ff; text-align: center; margin: 40px 0; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
-        .cyber-card { background: #0f0f0f; border: 1px solid #222; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .section-title { color: #fff; border-left: 4px solid #00d2ff; padding-left: 10px; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; font-size: 1rem; }
-        .section-title.gold { border-left-color: #ffcc00; }
-        .data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1a1a1a; }
-        .val-cur { color: #39ff14; font-weight: bold; font-family: 'Orbitron', sans-serif; }
-        .val-gold { color: #ffcc00; font-weight: bold; font-family: 'Orbitron', sans-serif; }
-        .desc { font-size: 0.75rem; color: #555; display: block; }
+        :root { --n-blue: #00d2ff; --n-green: #39ff14; --n-gold: #ffcc00; --bg: #050505; }
+        body { background-color: var(--bg); color: #e0e0e0; font-family: 'Rajdhani', sans-serif; }
+        .top-bar { background: #111; border-bottom: 2px solid #222; padding: 10px; font-weight: 600; font-size: 0.85rem; color: var(--n-blue); text-transform: uppercase; }
+        .main-header { font-family: 'Orbitron', sans-serif; color: var(--n-blue); text-shadow: 0 0 15px rgba(0,210,255,0.4); margin: 40px 0; }
+        .cyber-card { background: #0f0f0f; border: 1px solid #222; border-radius: 4px; padding: 25px; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .cyber-card:hover { border-color: var(--n-blue); }
+        .section-title { border-left: 4px solid var(--n-blue); padding-left: 15px; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; font-size: 1rem; }
+        .section-title.gold { border-left-color: var(--n-gold); }
+        .data-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1a1a1a; }
+        .data-row:hover { background: rgba(0,210,255,0.05); padding-left: 10px; border-radius: 4px; }
+        .code { font-weight: 700; font-size: 1.1rem; color: #fff; display: block; }
+        .name { font-size: 0.7rem; color: #555; text-transform: uppercase; font-weight: 600; }
+        .val { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.2rem; }
+        .val-cur { color: var(--n-green); }
+        .val-gold { color: var(--n-gold); }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        İSTANBUL: {{ weather.temp }}°C - {{ weather.desc | upper }}
+    <div class="top-bar text-center">
+        <i class="fas fa-satellite me-2"></i> ISTANBUL: {{ weather.temp }}°C - {{ weather.desc | upper }} | <span id="clock">00:00:00</span>
     </div>
 
-    <div class="container">
-        <h1 class="header-title">FINANCIAL COMMAND CENTER</h1>
-
-        <div class="row">
-            <div class="col-md-6">
+    <div class="container text-center">
+        <h1 class="main-header">FINANCIAL COMMAND CENTER</h1>
+        
+        <div class="row g-4 text-start">
+            <div class="col-lg-6">
                 <div class="cyber-card">
-                    <div class="section-title">DÖVİZ KURLARI</div>
+                    <div class="section-title">DÖVİZ KURLARI // LIVE</div>
                     {% for c in currencies %}
                     <div class="data-row">
                         <div>
-                            <strong>{{ c.code }}</strong>
-                            <span class="desc">{{ c.name }}</span>
+                            <span class="code">{{ c.code }}</span>
+                            <span class="name">{{ c.name }} / TRY</span>
                         </div>
-                        <div class="val-cur">{{ c.val }} ₺</div>
+                        <div class="val val-cur">{{ c.val }} ₺</div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div
+            <div class="col-lg-6">
+                <div class="cyber-card">
+                    <div class="section-title gold">ALTIN PİYASASI // LIVE</div>
+                    {% for g in gold %}
+                    <div class="data-row">
+                        <div>
+                            <span class="code">{{ g.name }}</span>
+                            <span class="name">Piyasa Satış Fiyatı</span>
+                        </div>
+                        <div class="val val-gold">{{ g.val }} ₺</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() { document.getElementById('clock').textContent = new Date().toLocaleTimeString('tr-TR'); }
+        setInterval(updateClock, 1000); updateClock();
+        setTimeout(() => location.reload(), 300000);
+    </script>
+</body>
+</html>
