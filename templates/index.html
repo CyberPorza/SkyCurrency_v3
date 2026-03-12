@@ -16,14 +16,10 @@
         .cyber-card:hover { border-color: var(--n-blue); }
         .section-title { border-left: 4px solid var(--n-blue); padding-left: 15px; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; font-size: 1rem; }
         .section-title.gold { border-left-color: var(--n-gold); }
-        
-        /* Bayrak ve Veri Düzeni */
         .data-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1a1a1a; }
         .data-row:hover { background: rgba(0,210,255,0.05); padding-left: 10px; border-radius: 4px; }
-        
         .info-side { display: flex; align-items: center; }
-        .flag-img { width: 32px; height: 32px; border-radius: 50%; margin-right: 15px; border: 1px solid #333; }
-        
+        .flag-img { width: 30px; height: 20px; object-fit: cover; border-radius: 3px; margin-right: 15px; border: 1px solid #333; }
         .code { font-weight: 700; font-size: 1.1rem; color: #fff; line-height: 1.2; }
         .name { font-size: 0.7rem; color: #555; text-transform: uppercase; font-weight: 600; }
         .val { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.2rem; }
@@ -47,7 +43,7 @@
                     {% for c in currencies %}
                     <div class="data-row">
                         <div class="info-side">
-                            <img src="https://raw.githubusercontent.com/Lukas-Straschi/CircleFlags/gh-pages/flags/{{ c.code.split('/')[0].lower()[:2] if c.code[:3] != 'GBP' else 'gb-eng' }}.svg" class="flag-img" onerror="this.src='https://raw.githubusercontent.com/Lukas-Straschi/CircleFlags/gh-pages/flags/unknown.svg'">
+                            <img src="https://flagcdn.com/w40/{{ c.flag }}.png" class="flag-img" alt="flag">
                             <div>
                                 <span class="code">{{ c.code }}</span>
                                 <span class="name">{{ c.name }}</span>
@@ -61,14 +57,14 @@
 
             <div class="col-lg-6">
                 <div class="cyber-card">
-                    <div class="section-title gold">ALTIN PİYASASI // CANLI</div>
+                    <div class="section-title gold">ALTIN PİYASASI // GOOGLE FINANCE</div>
                     {% for g in gold %}
                     <div class="data-row">
                         <div class="info-side">
-                            <img src="https://raw.githubusercontent.com/Lukas-Straschi/CircleFlags/gh-pages/flags/tr.svg" class="flag-img">
+                            <img src="https://flagcdn.com/w40/tr.png" class="flag-img" alt="tr">
                             <div>
                                 <span class="code">{{ g.name }}</span>
-                                <span class="name">TÜRKİYE PİYASASI</span>
+                                <span class="name">PİYASA VERİSİ</span>
                             </div>
                         </div>
                         <div class="val val-gold">{{ g.val }} ₺</div>
