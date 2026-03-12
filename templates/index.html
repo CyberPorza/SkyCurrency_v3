@@ -3,66 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyCurrency | Executive Terminal v3.5</title>
+    <title>SkyCurrency Terminal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --neon-blue: #00d2ff; 
-            --neon-green: #39ff14; 
-            --neon-gold: #ffcc00; 
-            --bg-dark: #050505; 
-            --card-bg: #0f0f0f;
-        }
+        body { background-color: #050505; color: #e0e0e0; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 0; }
+        .top-bar { background: #111; border-bottom: 2px solid #222; padding: 10px; font-size: 0.9rem; text-align: center; color: #00d2ff; }
+        .header-title { font-family: 'Orbitron', sans-serif; color: #00d2ff; text-align: center; margin: 40px 0; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
+        .cyber-card { background: #0f0f0f; border: 1px solid #222; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .section-title { color: #fff; border-left: 4px solid #00d2ff; padding-left: 10px; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; font-size: 1rem; }
+        .section-title.gold { border-left-color: #ffcc00; }
+        .data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1a1a1a; }
+        .val-cur { color: #39ff14; font-weight: bold; font-family: 'Orbitron', sans-serif; }
+        .val-gold { color: #ffcc00; font-weight: bold; font-family: 'Orbitron', sans-serif; }
+        .desc { font-size: 0.75rem; color: #555; display: block; }
+    </style>
+</head>
+<body>
 
-        body { 
-            background-color: var(--bg-dark); 
-            color: #e0e0e0; 
-            font-family: 'Rajdhani', sans-serif; 
-            letter-spacing: 0.8px;
-            min-height: 100vh;
-        }
+    <div class="top-bar">
+        İSTANBUL: {{ weather.temp }}°C - {{ weather.desc | upper }}
+    </div>
 
-        /* Üst Bilgi Barı */
-        .top-bar { 
-            background: #111; 
-            border-bottom: 2px solid #222; 
-            padding: 12px 0; 
-            font-weight: 600; 
-            font-size: 0.85rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
-        }
+    <div class="container">
+        <h1 class="header-title">FINANCIAL COMMAND CENTER</h1>
 
-        /* Ana Başlık */
-        .main-header { 
-            font-family: 'Orbitron', sans-serif; 
-            color: var(--neon-blue); 
-            text-shadow: 0 0 15px rgba(0,210,255,0.4); 
-            margin: 40px 0 10px 0;
-            text-transform: uppercase;
-        }
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cyber-card">
+                    <div class="section-title">DÖVİZ KURLARI</div>
+                    {% for c in currencies %}
+                    <div class="data-row">
+                        <div>
+                            <strong>{{ c.code }}</strong>
+                            <span class="desc">{{ c.name }}</span>
+                        </div>
+                        <div class="val-cur">{{ c.val }} ₺</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-        .sub-header {
-            color: #555;
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-        }
-
-        /* Siber Kart Yapısı */
-        .cyber-card { 
-            background: var(--card-bg);
-            border: 1px solid #222;
-            border-radius: 4px;
-            padding: 25px;
-            position: relative;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-
-        .cyber-card:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 25px rgba(0,210,255,0.1);
-        }
+            <div class="col-md-6">
+                <div
